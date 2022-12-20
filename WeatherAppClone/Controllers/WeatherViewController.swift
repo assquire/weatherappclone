@@ -32,7 +32,7 @@ final class WeatherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        weatherManager.delegate = self
+        weatherManager.delegate = self
 //        weatherManager.fetchRequest(with: citiesList)
     }
     
