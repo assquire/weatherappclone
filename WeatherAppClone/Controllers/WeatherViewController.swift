@@ -159,5 +159,8 @@ private extension WeatherViewController {
         }
     }
     
+    func setupAnything() {
+        
+    }
 }
 
