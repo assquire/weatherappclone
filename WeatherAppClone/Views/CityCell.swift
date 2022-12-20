@@ -65,6 +65,13 @@ final class CityCell: UITableViewCell {
             weatherIcon.image = UIImage(named: "image\(Int.random(in: 2...8))")?.withAlignmentRectInsets(UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10))
         }
     }
+    
+    func setCity(with city: String) {
+        cityTime.text = "\(Int.random(in: 0..<23)):\(Int.random(in: 0..<60))"
+        cityName.text = city
+        weatherDegree.text = "\(Int.random(in: -20..<40))°"
+        weatherIcon.image = UIImage(named: "image\(Int.random(in: 2...8))")?.withAlignmentRectInsets(UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10))
+    }
 }
 
 //MARK: - Custom private methods

@@ -12,9 +12,11 @@ final class WeatherViewController: UIViewController {
     
     var weatherManager = WeatherManager()
 
-//    private lazy var citiesList: [String] = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
+    private lazy var citiesList: [String] = ["Warsaw","Bucharest","Martuni","Shah Alam","Karmie","Budapest","Munich","Netivot","Santa Cruz de la Sierra","Porto Alegre","Kfar Yona","Palermo","Bremen","Jermuk","Beit Shemesh","Florence","Utrecht","Buenos Aires","Guayaquil","Rosario","Soledad","Subang Jaya","Valencia","Pasir Gudang","Akhtala"]
     
-    private lazy var citiesList: [(Double, Double)] = [(43.26, 76.93), (52.23, 21.01), (44.43, 26.11), (38.13, 13.34), (39.47, -0.38)]
+    private lazy var filteredList: [String] = citiesList
+    
+//    private lazy var citiesList: [(Double, Double)] = [(43.26, 76.93), (52.23, 21.01), (44.43, 26.11), (38.13, 13.34), (39.47, -0.38)]
     
     private lazy var cityModelsList: [WeatherModel] = []
     
@@ -30,8 +32,8 @@ final class WeatherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        weatherManager.delegate = self
-        weatherManager.fetchRequest(with: citiesList)
+//        weatherManager.delegate = self
+//        weatherManager.fetchRequest(with: citiesList)
     }
     
     override func viewDidLoad() {
@@ -62,13 +64,13 @@ private extension WeatherViewController {
 extension WeatherViewController: SearchFieldCellDelegate {
     
     func didChangeTextField(with text: String) {
-//        if text == "" {
-//            filteredList = citiesList
-//            mainTableView.reloadSections(IndexSet(1..<mainTableView.numberOfSections), with: .automatic)
-//        } else {
-//            filteredList = citiesList.filter { $0.hasPrefix(text) }
-//            mainTableView.reloadSections(IndexSet(1..<mainTableView.numberOfSections), with: .automatic)
-//        }
+        if text == "" {
+            filteredList = citiesList
+            mainTableView.reloadSections(IndexSet(1..<mainTableView.numberOfSections), with: .automatic)
+        } else {
+            filteredList = citiesList.filter { $0.hasPrefix(text) }
+            mainTableView.reloadSections(IndexSet(1..<mainTableView.numberOfSections), with: .automatic)
+        }
     }
 }
 
@@ -83,7 +85,7 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default: return cityModelsList.count
+        default: return filteredList.count
         }
     }
     
@@ -97,7 +99,7 @@ extension WeatherViewController: UITableViewDataSource {
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.Identifiers.cityCell, for: indexPath) as! CityCell
-            cell.setCity(with: cityModelsList[indexPath.row])
+            cell.setCity(with: filteredList[indexPath.row])
             cell.selectionStyle = .none
             cell.backgroundColor = .clear
             return cell
@@ -157,10 +159,6 @@ private extension WeatherViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(10)
         }
-    }
-    
-    func setupAnything() {
-        // something
     }
 }
 
